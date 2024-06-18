@@ -1,0 +1,64 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <%- include("partials/header.ejs") %>
+    <div class="max-w-screen-x h-screen">
+      <div class="container">
+        <h1 class="title">Error: not found!</h1>
+        <p>resource not found!</p>
+      </div>
+    </div>
+  </body>
+
+  <style>
+    .max-w-screen-xl {
+      max-width: 1280px;
+    }
+
+    .h-screen {
+      height: 100vh;
+    }
+
+    .p-1 {
+      padding: 0.25rem;
+    }
+    .p-2 {
+      padding: 0.5rem;
+    }
+    .p-4 {
+      padding: 1rem;
+    }
+    .p-8 {
+      padding: 2rem;
+    }
+
+    .flex {
+      display: flex;
+    }
+
+    .flex-row {
+      flex-direction: row;
+    }
+
+    .flex-col {
+      flex-direction: col;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      padding: 3rem 4rem;
+      gap: 1rem;
+    }
+    .title {
+      line-height: 0;
+      padding: 0px;
+      margin: 0px;
+      font-size: 2rem;
+    }
+  </style>
+</html>
