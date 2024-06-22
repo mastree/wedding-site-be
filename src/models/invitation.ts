@@ -1,6 +1,6 @@
 export type Rsvp = {
-  will_attend: boolean;
-  num_attendee: number;
+  will_attend: boolean | undefined;
+  num_attendee: number | undefined;
 };
 
 export type Invitation = {
@@ -12,6 +12,6 @@ export type Invitation = {
 };
 
 export default interface InvitationService {
-  getInvitations(): Invitation[];
-  getInvitationById(id: string): Invitation | undefined;
+  getInvitations(): Promise<Invitation[]>;
+  getInvitationById(id: string): Promise<Invitation | undefined>;
 }

@@ -22,23 +22,31 @@ export default class InvitationController {
     this.service = service;
   }
 
-  getInvitations(req: Request, res: Response) {
-    const data = this.service.getInvitations();
-    return res.send(createResponse({ data }));
+  async getInvitations(req: Request, res: Response) {
+    try {
+      const data = await this.service.getInvitations();
+      return res.send(createResponse({ data }));
+    } catch (e) {
+      res.status(500).send();
+    }
   }
 
-  getInvitationById(req: Request, res: Response) {
+  async getInvitationById(req: Request, res: Response) {
     const { id } = req.params;
-    const data = this.service.getInvitationById(id);
-    if (data) {
-      return res.send(createResponse({ data }));
-    }
+    try {
+      const data = await this.service.getInvitationById(id);
+      if (data) {
+        return res.send(createResponse({ data }));
+      }
 
-    return res.status(404).send(
-      createResponse({
-        error: true,
-        message: "no invitation with such id!",
-      })
-    );
+      return res.status(404).send(
+        createResponse({
+          error: true,
+          message: "no invitation with such id!",
+        })
+      );
+    } catch (e) {
+      res.status(500).send();
+    }
   }
 }

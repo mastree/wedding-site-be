@@ -20,10 +20,10 @@ const invitations = [
 ];
 
 export default class InvitationServiceDummyImpl implements InvitationService {
-  getInvitations(): Invitation[] {
+  async getInvitations() {
     return invitations;
   }
-  getInvitationById(id: string): Invitation | undefined {
+  async getInvitationById(id: string) {
     return invitations.find((value) => {
       return value.id == id;
     });
