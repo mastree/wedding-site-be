@@ -1,19 +1,6 @@
 import { Request, Response } from "express";
 import InvitationService, { Rsvp } from "../models/invitation";
-
-export type ControllerResponse = {
-  data: any;
-  error: boolean;
-  message: string;
-};
-
-const createResponse = ({
-  data = undefined,
-  error = false,
-  message = "",
-}: any): ControllerResponse => {
-  return { data, error, message };
-};
+import { createResponse } from "./common";
 
 export default class InvitationController {
   service: InvitationService;
@@ -27,6 +14,7 @@ export default class InvitationController {
       const data = await this.service.getAll();
       return res.send(createResponse({ data }));
     } catch (e) {
+      console.log(e);
       res.status(500).send();
     }
   }
@@ -46,6 +34,7 @@ export default class InvitationController {
         })
       );
     } catch (e) {
+      console.log(e);
       res.status(500).send();
     }
   }

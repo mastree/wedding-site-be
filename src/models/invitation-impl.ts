@@ -70,7 +70,7 @@ export default class InvitationServiceImpl implements InvitationService {
     });
     const body = (await res.json()) as unknown as HttpPostInternalResponse;
     if (body.error) {
-      console.log(`Failed to updateInvitationRsvp: ${body.message}`);
+      console.log(`Failed to updateRsvp: ${body.message}`);
       return undefined;
     }
     const { data } = body;
