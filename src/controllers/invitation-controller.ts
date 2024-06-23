@@ -22,19 +22,19 @@ export default class InvitationController {
     this.service = service;
   }
 
-  async getInvitations(req: Request, res: Response) {
+  async getAll(req: Request, res: Response) {
     try {
-      const data = await this.service.getInvitations();
+      const data = await this.service.getAll();
       return res.send(createResponse({ data }));
     } catch (e) {
       res.status(500).send();
     }
   }
 
-  async getInvitationById(req: Request, res: Response) {
+  async getById(req: Request, res: Response) {
     const { id } = req.params;
     try {
-      const data = await this.service.getInvitationById(id);
+      const data = await this.service.getById(id);
       if (data) {
         return res.send(createResponse({ data }));
       }
@@ -50,7 +50,7 @@ export default class InvitationController {
     }
   }
 
-  async updateInvitationRsvp(req: Request, res: Response) {
+  async updateRsvp(req: Request, res: Response) {
     console.log(`id: ${req.params.id}, body: ${JSON.stringify(req.body)}`);
     const { id } = req.params;
     try {
@@ -62,7 +62,7 @@ export default class InvitationController {
       if (!rsvp.will_attend) {
         rsvp.num_attendee = 0;
       }
-      const data = await this.service.updateInvitationRsvp(id, rsvp);
+      const data = await this.service.updateRsvp(id, rsvp);
       if (data) {
         return res.send(createResponse({ data }));
       }

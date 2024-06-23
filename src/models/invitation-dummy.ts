@@ -20,18 +20,15 @@ const invitations = [
 ];
 
 export default class InvitationServiceDummyImpl implements InvitationService {
-  async getInvitations() {
+  async getAll() {
     return invitations;
   }
-  async getInvitationById(id: string) {
+  async getById(id: string) {
     return invitations.find((value) => {
       return value.id == id;
     });
   }
-  updateInvitationRsvp(
-    id: string,
-    rsvp: Rsvp
-  ): Promise<Invitation | undefined> {
+  updateRsvp(id: string, rsvp: Rsvp): Promise<Invitation | undefined> {
     throw new Error("Method not implemented.");
   }
 }

@@ -10,16 +10,16 @@ const invitationController = new InvitationController(invitationService);
 
 // wedding/invitations
 router.get("/invitations", (req: Request, res: Response) =>
-  invitationController.getInvitations(req, res)
+  invitationController.getAll(req, res)
 );
 
 // wedding/invitation/:id
 router.get("/invitation/:id", (req: Request, res: Response) =>
-  invitationController.getInvitationById(req, res)
+  invitationController.getById(req, res)
 );
 
 router.post("/invitation/:id", (req: Request, res: Response) =>
-  invitationController.updateInvitationRsvp(req, res)
+  invitationController.updateRsvp(req, res)
 );
 
 export default router;

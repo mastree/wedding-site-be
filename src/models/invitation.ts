@@ -12,7 +12,7 @@ export type Invitation = {
 };
 
 export default interface InvitationService {
-  getInvitations(): Promise<Invitation[]>;
-  getInvitationById(id: string): Promise<Invitation | undefined>;
-  updateInvitationRsvp(id: string, rsvp: Rsvp): Promise<Invitation | undefined>;
+  getAll(): Promise<Invitation[]>;
+  getById(id: string): Promise<Invitation | undefined>;
+  updateRsvp(id: string, rsvp: Rsvp): Promise<Invitation | undefined>;
 }

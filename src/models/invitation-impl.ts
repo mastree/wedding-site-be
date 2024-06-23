@@ -24,7 +24,7 @@ type HttpPostInternalResponse = {
 };
 
 export default class InvitationServiceImpl implements InvitationService {
-  async getInvitations() {
+  async getAll() {
     const res = await fetch(`${apiConfig.url}`, {
       method: "GET",
     });
@@ -42,7 +42,7 @@ export default class InvitationServiceImpl implements InvitationService {
       };
     });
   }
-  async getInvitationById(id: string) {
+  async getById(id: string) {
     const res = await fetch(`${apiConfig.url}?id=${id}`, {
       method: "GET",
     });
@@ -60,7 +60,7 @@ export default class InvitationServiceImpl implements InvitationService {
       };
     })[0];
   }
-  async updateInvitationRsvp(id: string, rsvp: Rsvp) {
+  async updateRsvp(id: string, rsvp: Rsvp) {
     const res = await fetch(`${apiConfig.url}`, {
       method: "POST",
       body: JSON.stringify({
