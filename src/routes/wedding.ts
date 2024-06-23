@@ -18,4 +18,8 @@ router.get("/invitation/:id", (req: Request, res: Response) =>
   invitationController.getInvitationById(req, res)
 );
 
+router.post("/invitation/:id", (req: Request, res: Response) =>
+  invitationController.updateInvitationRsvp(req, res)
+);
+
 export default router;

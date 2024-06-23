@@ -1,4 +1,4 @@
-import InvitationService, { Invitation } from "./invitation";
+import InvitationService, { Invitation, Rsvp } from "./invitation";
 
 const invitations = [
   {
@@ -27,5 +27,11 @@ export default class InvitationServiceDummyImpl implements InvitationService {
     return invitations.find((value) => {
       return value.id == id;
     });
+  }
+  updateInvitationRsvp(
+    id: string,
+    rsvp: Rsvp
+  ): Promise<Invitation | undefined> {
+    throw new Error("Method not implemented.");
   }
 }

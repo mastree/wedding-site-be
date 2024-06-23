@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import InvitationService from "../models/invitation";
+import InvitationService, { Rsvp } from "../models/invitation";
 
 export type ControllerResponse = {
   data: any;
@@ -42,10 +42,38 @@ export default class InvitationController {
       return res.status(404).send(
         createResponse({
           error: true,
-          message: "no invitation with such id!",
+          message: "No invitation with such id!",
         })
       );
     } catch (e) {
+      res.status(500).send();
+    }
+  }
+
+  async updateInvitationRsvp(req: Request, res: Response) {
+    console.log(`id: ${req.params.id}, body: ${JSON.stringify(req.body)}`);
+    const { id } = req.params;
+    try {
+      const rsvp = {
+        will_attend: false,
+        num_attendee: 0,
+        ...req.body,
+      } as unknown as Rsvp;
+      if (!rsvp.will_attend) {
+        rsvp.num_attendee = 0;
+      }
+      const data = await this.service.updateInvitationRsvp(id, rsvp);
+      if (data) {
+        return res.send(createResponse({ data }));
+      }
+      return res.status(500).send(
+        createResponse({
+          error: true,
+          message: "Internal server error!",
+        })
+      );
+    } catch (e) {
+      console.log(e);
       res.status(500).send();
     }
   }

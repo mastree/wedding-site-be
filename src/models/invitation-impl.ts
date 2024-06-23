@@ -1,23 +1,4 @@
-import InvitationService, { Invitation } from "./invitation";
-
-const invitations = [
-  {
-    created_at: 12312412,
-    name: "John Doe",
-    id: "xasAc12E",
-    invitation_pax: 2,
-    rsvp: {
-      will_attend: true,
-      num_attendee: 1,
-    },
-  },
-  {
-    created_at: 12362412,
-    name: "King Kong",
-    id: "“j1ljW1ks0”",
-    invitation_pax: 1,
-  },
-];
+import InvitationService, { Invitation, Rsvp } from "./invitation";
 
 const apiConfig = {
   url: process.env.API_URL || "",
@@ -32,17 +13,22 @@ type InternalInvitation = {
   num_attendee?: number;
 };
 
-type InternalResponse = {
+type HttpGetInternalResponse = {
   invitations: InternalInvitation[];
+};
+
+type HttpPostInternalResponse = {
+  data?: InternalInvitation | undefined;
+  error: boolean;
+  message?: string;
 };
 
 export default class InvitationServiceImpl implements InvitationService {
   async getInvitations() {
-    const res = await fetch(apiConfig.url, {
+    const res = await fetch(`${apiConfig.url}`, {
       method: "GET",
     });
-    const body = (await res.json()) as unknown as InternalResponse;
-    console.log(`body: ${JSON.stringify(body)}`);
+    const body = (await res.json()) as unknown as HttpGetInternalResponse;
     return body.invitations.map((value): Invitation => {
       return {
         created_at: value.created_at,
@@ -60,8 +46,7 @@ export default class InvitationServiceImpl implements InvitationService {
     const res = await fetch(`${apiConfig.url}?id=${id}`, {
       method: "GET",
     });
-    const body = (await res.json()) as unknown as InternalResponse;
-    console.log(`body: ${JSON.stringify(body)}`);
+    const body = (await res.json()) as unknown as HttpGetInternalResponse;
     return body.invitations.map((value): Invitation => {
       return {
         created_at: value.created_at,
@@ -74,5 +59,33 @@ export default class InvitationServiceImpl implements InvitationService {
         },
       };
     })[0];
+  }
+  async updateInvitationRsvp(id: string, rsvp: Rsvp) {
+    const res = await fetch(`${apiConfig.url}`, {
+      method: "POST",
+      body: JSON.stringify({
+        ...rsvp,
+        id,
+      }),
+    });
+    const body = (await res.json()) as unknown as HttpPostInternalResponse;
+    if (body.error) {
+      console.log(`Failed to updateInvitationRsvp: ${body.message}`);
+      return undefined;
+    }
+    const { data } = body;
+    if (!data) {
+      return undefined;
+    }
+    return {
+      created_at: data.created_at,
+      name: data.name,
+      id: data.id,
+      invitation_pax: data.invitation_pax,
+      rsvp: {
+        will_attend: data.will_attend,
+        num_attendee: data.num_attendee,
+      },
+    };
   }
 }

@@ -2,6 +2,7 @@ import express from "express";
 import process from "process";
 import weddingRoutes from "./routes/wedding";
 import morgan from "morgan";
+import bodyParser from "body-parser";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -17,6 +18,7 @@ app.get("/", (req, res) => {
 });
 
 app.use(morgan("dev"));
+app.use(bodyParser.json());
 app.use("/wedding", weddingRoutes);
 
 app.listen(port, () => {
