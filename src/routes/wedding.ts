@@ -4,15 +4,21 @@ import InvitationServiceImpl from "../models/invitation-impl";
 import InvitationController from "../controllers/invitation-controller";
 import { MessageServiceImpl } from "../models/message-impl";
 import MessageController from "../controllers/message-controller";
+import PdfGeneratorController from "../controllers/pdf-generator";
 
 const router = Router();
 // const invitationService = new InvitationServiceDummyImpl();
 const invitationService = new InvitationServiceImpl();
 const invitationController = new InvitationController(invitationService);
+const pdfGeneratorController = new PdfGeneratorController();
 
 const messageService = new MessageServiceImpl();
 const messageController = new MessageController(messageService);
 
+// wedding/invitation/pdf
+router.post("/invitation/pdf", (req: Request, res: Response) =>
+  pdfGeneratorController.generatePdfWithText(req, res)
+);
 // wedding/invitation/:id
 router.get("/invitation/:id", (req: Request, res: Response) =>
   invitationController.getById(req, res)
