@@ -2,6 +2,9 @@ import { Request, Response } from "express";
 import { createResponse } from "./common";
 import MessageService, { Message } from "../models/message";
 
+const kMaxNameCharacters = 40;
+const kMaxMessageCharacters = 1000;
+
 type GetPageQuery = {
   page: number;
   pageSize?: number;
@@ -38,9 +41,16 @@ export default class MessageController {
 
   async add(req: Request, res: Response) {
     try {
-      const message = {
+      let message = {
         ...req.body,
       } as unknown as Message;
+      if (message.name.length == 0) {
+        message.name = "Anonymous";
+      }
+      const trimmed = {
+        name: message.name.substring(0, kMaxNameCharacters),
+        message: message.message.substring(0, kMaxMessageCharacters),
+      };
       const data = await this.service.add(message);
       if (data) {
         return res.send(createResponse({ data }));
