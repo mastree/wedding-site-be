@@ -1,4 +1,5 @@
 export type Message = {
+  id: number;
   name: string;
   message: string;
   created_at?: number;
