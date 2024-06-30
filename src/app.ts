@@ -22,8 +22,6 @@ const port = process.env.PORT || 3000;
 app.set("view engine", "ejs");
 app.set("views", "./src/views");
 
-app.get("/");
-
 app.get("/", (req, res) => {
   res.status(404);
   res.render("not-found");
@@ -33,6 +31,7 @@ app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use("/wedding", cors(corsOptions), weddingRoutes);
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`listening to port ${port}`);
 });
+server.setTimeout(100000);
