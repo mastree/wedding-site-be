@@ -9,6 +9,10 @@ type GetPageQuery = {
   page: number;
   pageSize?: number;
 };
+type GetRangeQuery = {
+  offset: number;
+  rangeSize: number;
+};
 
 export default class MessageController {
   service: MessageService;
@@ -32,6 +36,19 @@ export default class MessageController {
     try {
       const { page = 0, pageSize = 5 } = req.query as unknown as GetPageQuery;
       const data = await this.service.getPage(page, pageSize);
+      return res.send(createResponse({ data }));
+    } catch (e) {
+      console.log(e);
+      res.status(500).send();
+    }
+  }
+
+  async getRange(req: Request, res: Response) {
+    if (!("offset" in req.query)) return this.getAll(req, res);
+    try {
+      const { offset = 0, rangeSize = 10 } =
+        req.query as unknown as GetRangeQuery;
+      const data = await this.service.getRange(offset, rangeSize);
       return res.send(createResponse({ data }));
     } catch (e) {
       console.log(e);

@@ -40,6 +40,10 @@ router.get("/message/size", (req: Request, res: Response) =>
 router.get("/message", (req: Request, res: Response) =>
   messageController.getPage(req, res)
 );
+// wedding/message/range?offset=<o>&rangeSize=<rs>
+router.get("/message/range", (req: Request, res: Response) =>
+  messageController.getRange(req, res)
+);
 router.post("/message", (req: Request, res: Response) =>
   messageController.add(req, res)
 );

@@ -1,4 +1,4 @@
-import MessageService, { Message } from "./message";
+import MessageService, { HttpGetRangeResponse, Message } from "./message";
 
 const apiConfig = {
   url: process.env.API_URL || "",
@@ -7,7 +7,6 @@ const apiConfig = {
 type HttpGetInternalResponse = {
   messages: Message[];
 };
-
 type HttpGetDataSizeResponse = {
   dataSize: number;
 };
@@ -35,6 +34,16 @@ export class MessageServiceImpl implements MessageService {
     );
     const body = (await res.json()) as unknown as HttpGetInternalResponse;
     return body.messages;
+  }
+  async getRange(offset: number, rangeSize: number) {
+    const res = await fetch(
+      `${apiConfig.url}?doMessage&offset=${offset}&rangeSize=${rangeSize}`,
+      {
+        method: "GET",
+      }
+    );
+    const body = (await res.json()) as unknown as HttpGetRangeResponse;
+    return body;
   }
   async add(message: Message): Promise<Message | undefined> {
     const res = await fetch(`${apiConfig.url}?doMessage`, {
