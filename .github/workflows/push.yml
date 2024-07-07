@@ -21,9 +21,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }} # User of the server you want to ssh into
           envs: PORT,API_URL,ENVIRONMENT
           script: |
-            mkdir -p ~/repo 
-            cd ~/repo 
             if cd backend; then git pull; else git clone git@github.com:mastree/wedding-site-be.git backend; cd backend; fi
-            docker-compose up --force-recreate --build -d
+            docker compose up --force-recreate --build -d
             docker image prune -f
             echo 'Deployment successful to digital ocean'
