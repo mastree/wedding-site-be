@@ -11,7 +11,10 @@ services:
   server:
     build:
       context: .
-    env_file: ".env"
+    environment:
+      - PORT=${PORT}
+      - API_URL=${API_URL}
+      - ENVIRONMENT=${ENVIRONMENT}
     ports:
       - 3000:3000
 # The commented out section below is an example of how to define a PostgreSQL

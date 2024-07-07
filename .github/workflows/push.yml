@@ -2,20 +2,28 @@ name: Try Clone
 on:
   push:
     branches: [master]
+  pull_request:
+    branches: [master]
 
 jobs:
   deploy:
     runs-on: ubuntu-24.04
     steps:
-      - name: Deploy Express app
+      - name: Update Repo & Deploy
         uses: appleboy/ssh-action@v0.1.2
+        env:
+          PORT: ${{ secrets.BE_PORT }}
+          API_URL: ${{ secrets.BE_API_URL }}
+          ENVIRONMENT: ${{ secrets.BE_ENVIRONMENT }}
         with:
-          host: ${{secrets.SSH_HOST}} # IP address of the server you wish to ssh into
-          key: ${{secrets.SSH_KEY}} # Private or public key of the server
+          host: ${{ secrets.SSH_HOST }} # IP address of the server you wish to ssh into
+          key: ${{ secrets.SSH_KEY }} # Private or public key of the server
           username: ${{ secrets.SSH_USERNAME }} # User of the server you want to ssh into
-     
+          envs: PORT,API_URL,ENVIRONMENT
           script: |
             mkdir -p ~/repo 
             cd ~/repo 
-            git clone git@github.com:mastree/wedding-site-be.git
-            echo 'Deployment successful to digital ocean' 
+            if cd backend; then git pull; else git clone git@github.com:mastree/wedding-site-be.git backend; cd backend; fi
+            docker-compose up --force-recreate --build -d
+            docker image prune -f
+            echo 'Deployment successful to digital ocean'
