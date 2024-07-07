@@ -6,7 +6,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 
 const origin: { [key: string]: string[] } = {
-  dev: ["http://localhost:4200"],
+  dev: ["http://localhost:4200", "http://frontend:4000", "http://localhost"],
   // TODO: add prod url
   prod: [""],
 };

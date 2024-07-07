@@ -33,6 +33,6 @@ COPY --from=build /app/dist ./dist
 # Run the application as a non-root user.
 USER node
 # Expose the port that the application listens on.
-EXPOSE 3000
+# EXPOSE 3000
 # Run the application.
 ENTRYPOINT ["node", "dist/app.js"]
