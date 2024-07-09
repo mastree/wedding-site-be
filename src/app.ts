@@ -8,7 +8,7 @@ import cors from "cors";
 const origin: { [key: string]: string[] } = {
   dev: ["http://localhost:4200", "http://frontend:4000", "http://localhost"],
   // TODO: add prod url
-  prod: [""],
+  prod: ["http://faiza.kamalshafi.me", "https://faiza.kamalshafi.me"],
 };
 const environment: string = process.env.ENVIRONMENT || "prod";
 var corsOptions = {

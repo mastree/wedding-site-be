@@ -1,28 +1,28 @@
-name: Try Clone
-on:
-  push:
-    branches: [master]
-  pull_request:
-    branches: [master]
+# name: Try Clone
+# on:
+#   push:
+#     branches: [master]
+#   pull_request:
+#     branches: [master]
 
-jobs:
-  deploy:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 40
-    steps:
-      - name: Update Repo & Deploy
-        uses: appleboy/ssh-action@v0.1.2
-        env:
-          APP_PORT: ${{ secrets.BE_PORT }}
-          APP_API_URL: ${{ secrets.BE_API_URL }}
-          APP_ENVIRONMENT: ${{ secrets.BE_ENVIRONMENT }}
-        with:
-          host: ${{ secrets.SSH_HOST }} # IP address of the server you wish to ssh into
-          key: ${{ secrets.SSH_KEY }} # Private or public key of the server
-          username: ${{ secrets.SSH_USERNAME }} # User of the server you want to ssh into
-          envs: APP_PORT,APP_API_URL,APP_ENVIRONMENT
-          script: |
-            if cd backend; then git pull; else git clone git@github.com:mastree/wedding-site-be.git backend; cd backend; fi
-            PORT=${APP_PORT} API_URL=${APP_API_URL} ENVIRONMENT=${APP_ENVIRONMENT} docker compose up --force-recreate --build -d
-            docker image prune -f
-            echo 'Deployment successful to digital ocean'
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-24.04
+#     timeout-minutes: 40
+#     steps:
+#       - name: Update Repo & Deploy
+#         uses: appleboy/ssh-action@v0.1.2
+#         env:
+#           APP_PORT: ${{ secrets.BE_PORT }}
+#           APP_API_URL: ${{ secrets.BE_API_URL }}
+#           APP_ENVIRONMENT: ${{ secrets.BE_ENVIRONMENT }}
+#         with:
+#           host: ${{ secrets.SSH_HOST }} # IP address of the server you wish to ssh into
+#           key: ${{ secrets.SSH_KEY }} # Private or public key of the server
+#           username: ${{ secrets.SSH_USERNAME }} # User of the server you want to ssh into
+#           envs: APP_PORT,APP_API_URL,APP_ENVIRONMENT
+#           script: |
+#             if cd backend; then git pull; else git clone git@github.com:mastree/wedding-site-be.git backend; cd backend; fi
+#             PORT=${APP_PORT} API_URL=${APP_API_URL} ENVIRONMENT=${APP_ENVIRONMENT} docker compose up --force-recreate --build -d
+#             docker image prune -f
+#             echo 'Deployment successful to digital ocean'
