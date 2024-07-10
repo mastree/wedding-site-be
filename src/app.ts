@@ -10,7 +10,10 @@ const origin: { [key: string]: string[] } = {
   // TODO: add prod url
   prod: ["http://faiza.kamalshafi.me", "https://faiza.kamalshafi.me"],
 };
-const environment: string = process.env.ENVIRONMENT || "prod";
+var environment: string = process.env.ENVIRONMENT || "prod";
+if (environment !== "dev" && environment !== "prod") {
+  environment = "prod";
+}
 var corsOptions = {
   origin: origin[environment],
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
