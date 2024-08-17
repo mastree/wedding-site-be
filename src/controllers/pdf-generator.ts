@@ -5,7 +5,7 @@ import { Request, Response } from "express";
 
 const kTemplateFilePath = "../../public/invitation-template.pdf";
 const kFontFilePath = "../../public/Montserrat-Regular.ttf";
-const kFontColor = "688680";
+const kFontColor = 0x688680;
 const kMaxCharacters = 40;
 
 type Size = {
@@ -18,7 +18,7 @@ type PdfContent = {
 };
 
 class PdfGenerator {
-  textYPos: number = 100;
+  textYPos: number = 75;
 
   pdfBuffer: Buffer;
   pageSize: Size;
@@ -32,6 +32,7 @@ class PdfGenerator {
       height: mediaSize[3],
       width: mediaSize[2],
     };
+    console.log(`PDF pageSize: ${JSON.stringify(this.pageSize)}`);
   }
 
   generatePdf(text: string) {
