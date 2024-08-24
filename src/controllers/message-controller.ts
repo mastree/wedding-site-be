@@ -3,7 +3,7 @@ import { createResponse } from "./common";
 import MessageService, { Message } from "../models/message";
 
 const kMaxNameCharacters = 40;
-const kMaxMessageCharacters = 1000;
+const kMaxMessageCharacters = 400;
 
 type GetPageQuery = {
   page: number;
